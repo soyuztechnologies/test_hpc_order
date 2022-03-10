@@ -1,0 +1,79 @@
+<mvc:View
+    controllerName="hpc.so.zhpcsoapp.controller.Add"
+    displayBlock="true"
+    height="100%"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Page title="Add Orders">
+        <content>
+            <f:SimpleForm>
+                <Label text="Buyer ID" />
+                <Input
+                    id="buyerid"
+                    value="{order>/orderdata/BuyerId}"
+                    placeholder="Enter Buyer"
+                    showSuggestion="true"
+                    suggestionItems="{/SupplierSet}">
+                    <suggestionItems>
+                        <core:ListItem text="{BP_ID}" additionalText="{COMPANY_NAME}" />
+                    </suggestionItems>
+                </Input>
+            </f:SimpleForm>
+            <Table id="idTab" growing="true" growingThreshold="10"
+                    items="{order>/orderdata/To_Items}">
+				<headerToolbar>
+					<OverflowToolbar id="otbSubheader">
+						<Title text="Order Items" level="H2" />
+						<ToolbarSpacer />
+						<Button id="onAddRow" text="Add New Row" type="Transparent"
+							press="onAddRow" />
+					</OverflowToolbar>
+				</headerToolbar>
+				<columns>
+					<Column width="12em">
+						<Text text="Product" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="End">
+						<Text text="Quantity" />
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+						<Text text="Price" />
+					</Column>
+					<Column hAlign="End">
+						<Text text="Note" />
+					</Column>
+                    <Column></Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle">
+						<cells>
+							<Input
+                                id="prodid"
+                                placeholder="Enter Product"
+                                showSuggestion="true"
+                                value="{order>ProductId}"
+                                suggestionItems="{/ProductSet}">
+                                <suggestionItems>
+                                    <core:ListItem text="{PRODUCT_ID}" additionalText="{NAME}" />
+                                </suggestionItems>
+                            </Input>
+                            <Input type="Number" value="{order>Quantity}"></Input>
+                            <Input type="Number" value="{order>GrossAmount}"></Input>
+                            <Input type="Text"   value="{order>Note}"></Input>
+                            <Button icon="sap-icon://delete" tooltip="delete this row" press="onDeleteRow"></Button>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Button text="Save" type="Accept" press="onSave"/>
+                <Button text="Reset" type="Emphasized" press="onReset"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

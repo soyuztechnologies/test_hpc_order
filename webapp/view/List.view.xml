@@ -1,0 +1,52 @@
+<mvc:View
+    controllerName="hpc.so.zhpcsoapp.controller.List"
+    xmlns="sap.m"
+    xmlns:semantic="sap.f.semantic"
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <Page
+        id="listPage"
+        preserveHeaderStateOnScroll="true"
+        toggleHeaderOnTitleClick="false">
+        <content>
+            <!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
+            <List
+                id="list"
+                width="auto"
+                class="sapFDynamicPageAlignContent"
+                items="{
+                    path: '/OrderSet',
+                    sorter: {
+                        path: 'SoId',
+                        descending: false
+                    },
+                    groupHeaderFactory: '.createGroupHeader'
+                }"
+                busyIndicatorDelay="{listView>/delay}"
+                noDataText="{listView>/noDataText}"
+                mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}"
+                growing="true"
+                growingScrollToLoad="true"
+                updateFinished=".onUpdateFinished"
+                selectionChange=".onSelectionChange">
+                <items>
+                    <ObjectListItem
+                        type="Navigation"
+                        press=".onSelectionChange"
+                        title="{SoId}"
+                        number="{
+                            path: 'GrossAmount',
+                            formatter: '.formatter.numberUnit'
+                        }"
+                        unit="{CurrencyCode}" />
+                </items>
+            </List>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer></ToolbarSpacer>
+                <Button text="Add" icon="sap-icon://add" press="onAdd"></Button>
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>
